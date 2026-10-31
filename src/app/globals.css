@@ -4,23 +4,25 @@
    ========================================================================== */
 
 :root {
-  /* Colors */
-  --bg-primary: #FAF6FB;
+  /* Faeries Junk Vintage & Forest Fairy Palette */
+  --bg-primary: #FAF7EE;
   --bg-card: #FFFFFF;
-  --bg-soft-lavender: #F4EBF7;
-  --bg-lavender-accent: #ECDDF1;
-  --bg-lavender-deep: #DCBFE6;
-  --bg-lavender-badge: #CFAEDB;
+  --bg-soft-lavender: #F2EDE2;
+  --bg-lavender-accent: #E8EFE8;
+  --bg-lavender-deep: #436746;
+  --bg-lavender-badge: #365339;
   
-  --purple-brand: #8C4E97;
-  --purple-deep: #44204F;
-  --purple-text: #2D1735;
-  --purple-muted: #7E6785;
-  --purple-border: #E8D7F0;
-  --purple-ribbon: #5D2A6B;
+  --purple-brand: #436746;       /* Signature Forest/Sage Green from Logo */
+  --purple-deep: #253827;        /* Deep Woodland Green */
+  --purple-text: #2C2723;        /* Vintage Dark Espresso */
+  --purple-muted: #6B625B;       /* Warm Earthy Muted */
+  --purple-border: #E2DBD0;      /* Vintage Cream Border */
+  --purple-ribbon: #D48C95;      /* Fairy Pink / Mauve Accent */
   
-  --gold-accent: #D4AF37;
+  --gold-accent: #CFA65B;        /* Antique Gold */
   --white: #FFFFFF;
+  --fairy-pink: #D48C95;
+  --fairy-sage: #D2DDD3;
   
   /* Typography */
   --font-script: 'Alex Brush', cursive;
@@ -28,9 +30,9 @@
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
   /* Shadows */
-  --shadow-soft: 0 10px 30px rgba(140, 78, 151, 0.08);
-  --shadow-hover: 0 20px 40px rgba(140, 78, 151, 0.16);
-  --shadow-card: 0 4px 20px rgba(74, 34, 85, 0.06);
+  --shadow-soft: 0 10px 30px rgba(67, 103, 70, 0.08);
+  --shadow-hover: 0 20px 40px rgba(67, 103, 70, 0.16);
+  --shadow-card: 0 4px 20px rgba(44, 39, 35, 0.05);
 
   /* Transitions */
   --transition-smooth: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);

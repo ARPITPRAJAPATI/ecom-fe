@@ -29,7 +29,7 @@ export default function QuickViewModal() {
 
   return (
     <div className="modal-backdrop" onClick={() => setQuickViewProduct(null)}>
-      <div className="quickview-modal-card" onClick={(e) => e.stopPropagation()}>
+      <div className="quickview-modal-card" onClick={(e) => e.stopPropagation()} style={{ background: "#FFFFFF", borderRadius: 24 }}>
         <button 
           className="modal-close-btn"
           onClick={() => setQuickViewProduct(null)}
@@ -40,22 +40,32 @@ export default function QuickViewModal() {
 
         <div className="quickview-grid">
           {/* Left: Product Image */}
-          <div className="quickview-img-col">
+          <div className="quickview-img-col" style={{ background: "#F5F0E6" }}>
             <img src={product.image} alt={product.name || product.title} className="quickview-img" />
             {product.badge && (
-              <span className="product-badge badge-modal">{product.badge}</span>
+              <span className="product-badge badge-modal" style={{ background: "var(--purple-brand)", color: "#FAF7EE" }}>
+                {product.badge}
+              </span>
             )}
           </div>
 
           {/* Right: Info */}
           <div className="quickview-info-col">
-            <span className="product-category-label">{product.category}</span>
-            <h2 className="quickview-title">{product.name || product.title}</h2>
+            <span className="product-category-label" style={{ color: "var(--fairy-pink)", fontWeight: 700 }}>
+              {product.category} • Authentic 1 of 1 Vintage
+            </span>
+            <h2 className="quickview-title" style={{ color: "var(--purple-deep)", fontFamily: "var(--font-heading)" }}>
+              {product.name || product.title}
+            </h2>
 
             <div className="quickview-pricing">
-              <span className="current-price">${Number(product.price).toFixed(2)} USD</span>
+              <span className="current-price" style={{ color: "var(--purple-brand)", fontSize: "1.4rem", fontWeight: 700 }}>
+                ₹{Number(product.price).toLocaleString("en-IN")}
+              </span>
               {product.originalPrice && (
-                <span className="original-price">${Number(product.originalPrice).toFixed(2)}</span>
+                <span className="original-price" style={{ color: "var(--purple-muted)" }}>
+                  ₹{Number(product.originalPrice).toLocaleString("en-IN")}
+                </span>
               )}
             </div>
 
@@ -65,86 +75,61 @@ export default function QuickViewModal() {
                   <Star 
                     key={i} 
                     size={14} 
-                    fill={i < Math.floor(product.rating) ? "#c5a880" : "none"} 
-                    color="#c5a880" 
+                    fill="#CFA65B" 
+                    color="#CFA65B" 
                   />
                 ))}
               </div>
-              <span className="review-count">({product.reviewsCount} verified reviews)</span>
+              <span className="review-count" style={{ color: "var(--purple-muted)" }}>
+                ({product.reviewsCount} fairy reviews)
+              </span>
             </div>
 
-            <p className="quickview-desc">{product.description}</p>
+            <p className="quickview-desc" style={{ color: "var(--purple-text)" }}>
+              {product.description}
+            </p>
 
             {/* Features */}
             {product.features && (
               <ul className="quickview-features-list">
                 {product.features.map((feat, i) => (
-                  <li key={i}>
-                    <Check size={14} color="#8e6c88" />
+                  <li key={i} style={{ color: "var(--purple-muted)" }}>
+                    <Check size={14} color="var(--purple-brand)" />
                     <span>{feat}</span>
                   </li>
                 ))}
               </ul>
             )}
 
-            {/* Color variants */}
-            {product.colors && product.colors.length > 0 && (
-              <div className="quickview-variants">
-                <span className="variant-label">Color: <strong>{currentColor}</strong></span>
-                <div className="variant-pills-row">
-                  {product.colors.map((color) => (
-                    <button
-                      key={color}
-                      className={`variant-pill ${currentColor === color ? "is-selected" : ""}`}
-                      onClick={() => setSelectedColor(color)}
-                    >
-                      {color}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-
             {/* Stepper & Actions */}
-            <div className="quickview-actions-wrap">
-              <div className="quickview-qty-stepper">
-                <button 
-                  className="qty-btn"
-                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                >
-                  -
-                </button>
-                <span className="qty-val">{quantity}</span>
-                <button 
-                  className="qty-btn"
-                  onClick={() => setQuantity(quantity + 1)}
-                >
-                  +
-                </button>
-              </div>
-
-              <button className="btn-primary quickview-add-btn" onClick={handleAdd}>
-                <ShoppingBag size={17} />
-                <span>ADD TO BAG • ${(Number(product.price) * quantity).toFixed(2)}</span>
+            <div className="quickview-actions-wrap" style={{ marginTop: 24 }}>
+              <button 
+                className="btn-primary quickview-add-btn" 
+                onClick={handleAdd}
+                style={{ background: "var(--purple-brand)", flex: 1 }}
+              >
+                <ShoppingBag size={17} style={{ marginRight: 6 }} />
+                <span>CLAIM TO CART 💘 • ₹{Number(product.price).toLocaleString("en-IN")}</span>
               </button>
 
               <button 
                 className={`quickview-wishlist-btn ${wishlisted ? "is-active" : ""}`}
                 onClick={() => toggleWishlist(product)}
                 title={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
+                style={{ borderColor: "var(--purple-border)" }}
               >
-                <Heart size={18} fill={wishlisted ? "#8e6c88" : "none"} color={wishlisted ? "#8e6c88" : "#2d2926"} />
+                <Heart size={18} fill={wishlisted ? "#D48C95" : "none"} color={wishlisted ? "#D48C95" : "#2C2723"} />
               </button>
             </div>
 
-            <div className="quickview-perks">
-              <div className="perk-item">
-                <ShieldCheck size={14} color="#8e6c88" />
-                <span>Complimentary gift box included</span>
+            <div className="quickview-perks" style={{ borderTop: "1px solid var(--purple-border)", paddingTop: 16 }}>
+              <div className="perk-item" style={{ color: "var(--purple-muted)" }}>
+                <ShieldCheck size={14} color="var(--purple-brand)" />
+                <span>No COD ❌ • Strictly Prepaid Orders Only</span>
               </div>
-              <div className="perk-item">
-                <Sparkles size={14} color="#8e6c88" />
-                <span>30-Day returns & exchanges</span>
+              <div className="perk-item" style={{ color: "var(--purple-muted)" }}>
+                <Sparkles size={14} color="var(--purple-brand)" />
+                <span>Shipping across India via express courier 🇮🇳</span>
               </div>
             </div>
           </div>

@@ -6,15 +6,15 @@ import { INITIAL_PRODUCTS, PROMO_CODES } from "../data/products";
 const StoreContext = createContext(null);
 
 const STORAGE_KEYS = {
-  CART: "lollipop_sleek_cart",
-  WISHLIST: "lollipop_sleek_wishlist",
-  ORDERS: "lollipop_sleek_orders",
-  PROMO: "lollipop_sleek_applied_promo",
-  USER: "lollipop_sleek_user_profile"
+  CART: "faeriesjunk_cart",
+  WISHLIST: "faeriesjunk_wishlist",
+  ORDERS: "faeriesjunk_orders",
+  PROMO: "faeriesjunk_applied_promo",
+  USER: "faeriesjunk_user_profile"
 };
 
-const FREE_SHIPPING_THRESHOLD = 75.00;
-const STANDARD_SHIPPING_FEE = 4.99;
+const FREE_SHIPPING_THRESHOLD = 1999;
+const STANDARD_SHIPPING_FEE = 99;
 
 export function StoreProvider({ children }) {
   const [mounted, setMounted] = useState(false);
@@ -23,7 +23,7 @@ export function StoreProvider({ children }) {
   const [wishlist, setWishlist] = useState([]);
   const [orders, setOrders] = useState([]);
   const [appliedPromo, setAppliedPromo] = useState(null);
-  const [userProfile, setUserProfile] = useState({ name: "Elena Laurent", email: "elena@example.com" });
+  const [userProfile, setUserProfile] = useState({ name: "Fae Muse", email: "fae@example.com" });
 
   // UI state
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -124,13 +124,13 @@ export function StoreProvider({ children }) {
       }
     });
 
-    showToast(`Added "${product.name || product.title}" to bag!`);
+    showToast(`Claimed "${product.name || product.title}" for your cart! 🧚‍♀️`);
     setIsCartOpen(true);
   };
 
   const removeFromCart = (itemId, selectedColor = null) => {
     setCart((prev) => prev.filter((item) => !(item.id === itemId && (!selectedColor || item.selectedColor === selectedColor))));
-    showToast("Item removed from bag");
+    showToast("Item released from your cart");
   };
 
   const updateCartQty = (itemId, newQty, selectedColor = null) => {
@@ -152,7 +152,7 @@ export function StoreProvider({ children }) {
     setCart([]);
   };
 
-  // Calculations
+  // Calculations in INR (₹)
   const cartSubtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const cartItemCount = cart.reduce((acc, item) => acc + item.quantity, 0);
 
@@ -161,7 +161,7 @@ export function StoreProvider({ children }) {
 
   if (appliedPromo) {
     if (appliedPromo.discountPercent) {
-      discountAmount = (cartSubtotal * appliedPromo.discountPercent) / 100;
+      discountAmount = Math.round((cartSubtotal * appliedPromo.discountPercent) / 100);
     } else if (appliedPromo.flatDiscount) {
       discountAmount = Math.min(appliedPromo.flatDiscount, cartSubtotal);
     }
@@ -181,15 +181,15 @@ export function StoreProvider({ children }) {
     const promo = PROMO_CODES[cleanCode];
 
     if (!promo) {
-      return { success: false, message: "Invalid promo code. Try SLEEK15 or WELCOME10" };
+      return { success: false, message: "Invalid promo code. Try FAEJUNK10 or FAEVIP15 🧚‍♀️" };
     }
 
     if (promo.minSpend && cartSubtotal < promo.minSpend) {
-      return { success: false, message: `Minimum spend of $${promo.minSpend} required for this code.` };
+      return { success: false, message: `Minimum spend of ₹${promo.minSpend} required for this code.` };
     }
 
     setAppliedPromo(promo);
-    showToast(`Code "${promo.code}" applied!`);
+    showToast(`Code "${promo.code}" applied! 🎀`);
     return { success: true, message: `Code ${promo.code} applied successfully!` };
   };
 
@@ -203,22 +203,22 @@ export function StoreProvider({ children }) {
     const exists = wishlist.some((item) => item.id === product.id);
     if (exists) {
       setWishlist((prev) => prev.filter((item) => item.id !== product.id));
-      showToast(`Removed "${product.name || product.title}" from wishlist`);
+      showToast(`Removed "${product.name || product.title}" from saved rags`);
     } else {
       setWishlist((prev) => [...prev, product]);
-      showToast(`Added "${product.name || product.title}" to wishlist!`);
+      showToast(`Saved "${product.name || product.title}" to wishlist! 💘`);
     }
   };
 
   const isWishlisted = (productId) => wishlist.some((item) => item.id === productId);
 
-  // Checkout & Orders
+  // Checkout & Orders (No COD Policy, Instant Order Confirmation)
   const checkout = (customerInfo = {}) => {
     if (cart.length === 0) {
-      return { success: false, message: "Your bag is empty" };
+      return { success: false, message: "Your cart is empty" };
     }
 
-    const orderId = `LL-${Date.now().toString(36).toUpperCase()}-${Math.floor(100 + Math.random() * 900)}`;
+    const orderId = `FJ-${Date.now().toString(36).toUpperCase()}-${Math.floor(100 + Math.random() * 900)}`;
     const newOrder = {
       orderId,
       date: new Date().toISOString(),
@@ -227,14 +227,16 @@ export function StoreProvider({ children }) {
       discount: discountAmount,
       shipping: shippingFee,
       total: cartTotal,
+      currency: "INR",
+      paymentMethod: "Prepaid UPI / Card (No COD ❌)",
       promoApplied: appliedPromo ? appliedPromo.code : null,
       customer: {
         name: customerInfo.name || userProfile.name,
         email: customerInfo.email || userProfile.email,
-        address: customerInfo.address || "14 Rue de Rivoli, Paris, France"
+        address: customerInfo.address || "Bandra West, Mumbai, Maharashtra 400050"
       },
-      status: "Confirmed",
-      estimatedDelivery: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000).toLocaleDateString("en-US", {
+      status: "Confirmed (Prepaid)",
+      estimatedDelivery: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000).toLocaleDateString("en-IN", {
         month: "short",
         day: "numeric",
         year: "numeric"

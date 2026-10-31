@@ -2,15 +2,15 @@ import "./globals.css";
 import { StoreProvider } from "../context/StoreContext";
 
 export const metadata = {
-  title: "Lollipop Sleek | Aesthetic Lavender Boutique & Parisian Luxury",
-  description: "Curated collection of fine baroque jewelry, minimalist hand watches, soy candles, and chic Parisian accessories for the modern muse.",
-  keywords: ["lavender boutique", "female jewelry", "aesthetic watch", "soy candle", "french chic accessories"],
+  title: "Faeries Junk 🧚‍♀️ (@faeriesjunk.store) | Curated & Handpicked Vintage Rags",
+  description: "Curated and handpicked vintage rags by @aryaamishraa. Y2K fairycore tops, archival lace corsets, pleated slip dresses, and vintage bags. Shipping across India 🇮🇳.",
+  keywords: ["faeriesjunk.store", "fae junk", "vintage rags", "fairycore thrift india", "y2k butterfly top", "vintage corset india", "preloved vintage store"],
   openGraph: {
-    title: "Lollipop Sleek | Aesthetic Lavender Boutique",
-    description: "Curated fine jewelry, hand watches, and Provence botanical scents.",
+    title: "Faeries Junk 🧚‍♀️ | Curated Vintage Rags",
+    description: "Curated and handpicked vintage rags by @aryaamishraa. Shipping across India.",
     type: "website",
-    locale: "en_US",
-    siteName: "Lollipop Sleek"
+    locale: "en_IN",
+    siteName: "Faeries Junk"
   }
 };
 

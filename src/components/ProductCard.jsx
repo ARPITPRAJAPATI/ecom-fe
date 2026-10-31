@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Heart, ShoppingBag, Eye } from "lucide-react";
+import { Heart, ShoppingBag } from "lucide-react";
 import { useStore } from "../context/StoreContext";
 
 export default function ProductCard({ product }) {
@@ -10,8 +10,8 @@ export default function ProductCard({ product }) {
   const wishlisted = isWishlisted(product.id);
 
   return (
-    <div className="product-card" data-id={product.id}>
-      <div className="product-thumb">
+    <div className="product-card" data-id={product.id} style={{ borderColor: "var(--purple-border)" }}>
+      <div className="product-thumb" style={{ background: "#F5F0E6" }}>
         <img 
           src={product.image} 
           alt={product.name || product.title} 
@@ -20,7 +20,16 @@ export default function ProductCard({ product }) {
         />
 
         {product.badge && (
-          <span className="pill-tag">{product.badge}</span>
+          <span 
+            className="pill-tag"
+            style={{
+              background: product.badge.includes("SOLD") ? "rgba(44, 39, 35, 0.9)" : "rgba(255, 255, 255, 0.95)",
+              color: product.badge.includes("SOLD") ? "#FAF7EE" : "var(--purple-brand)",
+              fontWeight: 700
+            }}
+          >
+            {product.badge}
+          </span>
         )}
 
         {/* Wishlist Button floating top-right */}
@@ -39,7 +48,7 @@ export default function ProductCard({ product }) {
             width: 34,
             height: 34,
             borderRadius: "50%",
-            background: "rgba(255,255,255,0.9)",
+            background: "rgba(255,255,255,0.92)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -49,41 +58,50 @@ export default function ProductCard({ product }) {
         >
           <Heart 
             size={16} 
-            fill={wishlisted ? "#8C4E97" : "none"} 
-            color={wishlisted ? "#8C4E97" : "#44204F"} 
+            fill={wishlisted ? "#D48C95" : "none"} 
+            color={wishlisted ? "#D48C95" : "#2C2723"} 
           />
         </button>
 
-        {/* Quick Add To Bag Button (revealed on card hover) */}
+        {/* Quick Add To Bag Button */}
         <button 
           className="quick-add-btn"
           onClick={(e) => {
             e.stopPropagation();
             addToCart(product, 1);
           }}
-          aria-label="Add to bag"
+          aria-label="Claim item to cart"
+          style={{ background: "var(--purple-brand)" }}
         >
           <ShoppingBag size={15} />
-          <span>ADD TO BAG</span>
+          <span>CLAIM TO CART 💘</span>
         </button>
       </div>
 
       <div 
         className="product-info" 
         onClick={() => setQuickViewProduct(product)}
-        style={{ cursor: "pointer" }}
+        style={{ cursor: "pointer", padding: "18px 16px" }}
       >
-        <h3 className="product-title">{product.name || product.title}</h3>
-        <div className="product-price">
-          ${Number(product.price).toFixed(2)} USD
+        <span style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", color: "var(--purple-muted)", textTransform: "uppercase", display: "block", marginBottom: 4 }}>
+          {product.category} • 1 of 1
+        </span>
+
+        <h3 className="product-title" style={{ fontSize: "1.05rem", color: "var(--purple-deep)", marginBottom: 6 }}>
+          {product.name || product.title}
+        </h3>
+
+        <div className="product-price" style={{ color: "var(--purple-brand)", fontSize: "1.05rem", fontWeight: 700 }}>
+          ₹{Number(product.price).toLocaleString("en-IN")}
           {product.originalPrice && (
             <span style={{ textDecoration: "line-through", color: "var(--purple-muted)", marginLeft: 8, fontSize: "0.85rem", fontWeight: 400 }}>
-              ${Number(product.originalPrice).toFixed(2)}
+              ₹{Number(product.originalPrice).toLocaleString("en-IN")}
             </span>
           )}
         </div>
-        <div className="product-rating">
-          ★★★★★ <span className="rating-count">({product.reviewsCount})</span>
+
+        <div className="product-rating" style={{ color: "var(--gold-accent)", marginTop: 4 }}>
+          ★★★★★ <span className="rating-count" style={{ color: "var(--purple-muted)" }}>({product.reviewsCount})</span>
         </div>
       </div>
     </div>
